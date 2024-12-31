@@ -8,105 +8,50 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import guestbook.repository.template.JdbcContext;
+import guestbook.repository.template.StatementStrategy;
 import guestbook.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
+	
+	private JdbcContext jdbcContext;
+	
+	public GuestbookRepository(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
+	}
 
 	public List<GuestbookVo> findAll() {
-		List<GuestbookVo> result = new ArrayList<>();
-
-		try (
-			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("SELECT id, name, contents, DATE_FORMAT(reg_date, '%Y-%m-%d %h:%i:%s') AS formatted_date"
-					+ " FROM guestbook"
-					+ " ORDER BY reg_date DESC");
-			ResultSet rs = pstmt.executeQuery();
-		) {
-			while (rs.next()) {
-				Long id = rs.getLong(1);
-				String name = rs.getString(2);
-				String contents = rs.getString(3);
-				String regDate = rs.getString(4);
-
-				GuestbookVo vo = new GuestbookVo();
-				vo.setId(id);
-				vo.setName(name);
-				vo.setContents(contents);
-				vo.setRegDate(regDate);
-
-				result.add(vo);
-			}
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		}
-
-		return result;
+		return jdbcContext.queryForList("SELECT id, name, contents, DATE_FORMAT(reg_date, '%Y-%m-%d %h:%i:%s') AS formatted_date"
+				+ " FROM guestbook"
+				+ " ORDER BY reg_date DESC",
+				new RowMapper<GuestbookVo>() {
+					@Override
+					public GuestbookVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+						GuestbookVo vo = new GuestbookVo();
+						vo.setId(rs.getLong(1));
+						vo.setName(rs.getString(2));
+						vo.setContents(rs.getString(3));
+						vo.setRegDate(rs.getString(4));
+						
+						return vo;
+					}
+				});
 	}
 	
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			String url = "jdbc:mariadb://192.168.0.10:3306/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패: " + e);
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		}
-
-		return conn;
-	}
-
 	public int insert(GuestbookVo vo) {
-		int count = 0;
-
-		try (
-			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("insert into guestbook (name, password, contents, reg_date) values(?, ?, ?, now())");
-		) {
-			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getContents());
-
-			count = pstmt.executeUpdate();
-			
-			if (count == 0) {
-			    System.out.println("Insert failed. No rows affected.");
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		}
-
-		return count;
+		return jdbcContext.executeUpdate(
+				"insert into guestbook (name, password, contents, reg_date) values(?, ?, ?, now())",
+				new Object[] {vo.getName(), vo.getPassword(), vo.getContents()});
 	}
 
 	public int deleteByIdAndPassword(Long id, String password) {
-		int count = 0;
-
-		try (
-			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("delete from guestbook where id=? and password=?");
-		) {
-			pstmt.setLong(1, id);
-			pstmt.setString(2, password);
-			count = pstmt.executeUpdate();
-			
-			if (count == 0) {
-			    System.out.println("Insert failed. No rows affected.");
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		}
-
-		return count;
+		return jdbcContext.executeUpdate("delete from guestbook where id=? and password=?", 
+				new Object[] {id, password});
 	}
 }
