@@ -29,20 +29,20 @@ public class JdbcContext {
 		}, rowMapper);
 	}
 	
-	private <E> List<E> queryForListWithStatementStrategy(StatementStrategy statementStrategy, RowMapper<E> rowMapper) {
+	private <E> List<E> queryForListWithStatementStrategy(StatementStrategy statementStrategy, RowMapper<E> rowMapper) throws RuntimeException {
 		List<E> result = new ArrayList<>();
 		
 		try(
 			Connection conn = dataSource.getConnection();
 			PreparedStatement pstmt = statementStrategy.makeStatement(conn);
-				ResultSet rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
 		) {
 			while(rs.next()) {
 				E e = rowMapper.mapRow(rs, rs.getRow());
 				result.add(e);
 			}
 		} catch(SQLException e) {
-			System.out.println("error: " + e);
+			throw new RuntimeException(e);
 		}
 		return result;
 	}
@@ -64,7 +64,7 @@ public class JdbcContext {
 	}
 	
 	//  여기에 strategy를 써야 함 .왜? CalculateContext 참고
-	public int executeUpdateWithStatementStrategy(StatementStrategy statementStrategy) {
+	public int executeUpdateWithStatementStrategy(StatementStrategy statementStrategy) throws RuntimeException {
 		int count = 0;
 
 		// 기존 dataSource.getConnection() 과정을 위임. 생략함.
@@ -80,13 +80,8 @@ public class JdbcContext {
 			}
 			*/
 			count = pstmt.executeUpdate();
-			
-			if (count == 0) {
-			    System.out.println("Insert failed. No rows affected.");
-			}
-
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			throw new RuntimeException(e);
 		}
 
 		return count;
