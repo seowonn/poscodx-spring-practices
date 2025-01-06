@@ -13,9 +13,14 @@ http://www.springframework.org/schema/context/spring-context.xsd
  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
  http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	
+	<!-- 스프링 빈의 메서드를 호출할 때, 정의된 Aspect(Advice + Pointcut)를 적용
+		어노테이션 기반 AOP를 사용할 수 있게 한다. -->
+	<aop:aspectj-autoproxy/>
+	
 	<context:annotation-config />
 	
-	<context:component-scan base-package="aop.service">
+	<context:component-scan base-package="aop.service, aop.aspect">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
