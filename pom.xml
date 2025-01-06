@@ -12,5 +12,6 @@
   	<module>logex</module>
   	<module>fileupload</module>
   	<module>locale</module>
+  	<module>aop</module>
   </modules>
 </project>
