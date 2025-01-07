@@ -23,14 +23,14 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- spring jdbc -->
+		<!-- hibernate validator -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>8.0.0.Final</version>
 		</dependency>
 		
-		<!-- jstl -->
+		<!-- jstl/el -->
 		<dependency>
 			<groupId>jakarta.el</groupId>
 			<artifactId>jakarta.el-api</artifactId>
