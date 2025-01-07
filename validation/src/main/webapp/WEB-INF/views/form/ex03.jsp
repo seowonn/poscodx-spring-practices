@@ -12,20 +12,29 @@
 </head>
 <body>
 <h1>Bean Validation</h1>
-<form action="${pageContext.request.contextPath }/ex01" method="post">
+<form:form 
+	modelAttribute="user" 
+	action="${pageContext.request.contextPath }/ex03" 
+	method="post">
 	<label for="name">name:</label>
-	<input type="text" id="name" name="name" value="">
-	<br><br>
+	<form:input path="name" />
+	<p style="padding: 5px 0; margin:0; color:#f00">	
+		<form:errors path="name" />
+	</p>
 
 	<label for="email">email:</label>
-	<input type="text" id="email" name="email" value="">
-	<br><br>
+	<form:input path="email" />
+	<p style="padding: 5px 0; margin:0; color:#f00">	
+		<form:errors path="email" />
+	</p>
 
 	<label for="password">password:</label>
-	<input type="password" id="password" name="password" value="">
-	<br><br>
+	<form:password path="password" />
+	<p style="padding: 5px 0; margin:0; color:#f00">	
+		<form:errors path="password" />
+	</p>
 
 	<input type="submit" value="sign up">
-</form>
+</form:form>
 </body>
 </html>
