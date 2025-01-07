@@ -34,7 +34,7 @@ public class MvcController {
 	
 	/**
 	 * BindingResult result: - Spring MVC에서 유효성 검사의 결과를 담아준다. @Valid와 함께! 사용된다. 
-	 * 				  - Spring Framework가 자동으로 생성하고 Controller 메서드에 직접 주입해준다.
+	 * 				  - @ModelAttribute: Spring Framework가 자동으로 생성하고 Controller 메서드에 직접 주입해준다.
 	 * 				  - 요청 데이터를 객체(user)로 바인딩하는 과정에서 발생하는 
 	 * 				    에러 정보(@Valid 유효성 검사 결과)를 저장한다. 
 	 */
@@ -76,7 +76,7 @@ public class MvcController {
 	public String ex03(@ModelAttribute @Valid User user, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			return "form/ex02";
+			return "form/ex03";
 		}
 		return "redirect:/result";
 	}
