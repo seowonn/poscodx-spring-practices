@@ -11,10 +11,10 @@ public class Aop {
 
 	public static void main(String[] args) {
 //		@After, @Before, @AfterReturning, @Around
-		test01();
+//		test01();
 		
 //		@After, @Before, @AfterThrowing, @Around
-//		test02();
+		test02();
 	}
 	
 	public static void test01() {
