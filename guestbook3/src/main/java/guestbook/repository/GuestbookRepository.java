@@ -38,7 +38,7 @@ public class GuestbookRepository {
 	
 	public int insert(GuestbookVo vo) {
 		return jdbcContext.update(
-				"NSERT INTO guestbook (name, password, contents, reg_date) VALUES(?, ?, ?, now())",
+				"INSERT INTO guestbook (name, password, contents, reg_date) VALUES(?, ?, ?, now())",
 				vo.getName(), vo.getPassword(), vo.getContents());
 	}
 
