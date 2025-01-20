@@ -8,32 +8,62 @@
 
 
 <h4>01.값출력 - th:text 속성, th:utext 속성, th:block 태그, [ [ EL ] ]</h4>
+<span th:text="${iVal}"></span> 								<br>
+<span th:text="${lVal}"></span> 								<br>
+<th:block th:text="${fVal}"></th:block> : 적당한 태그가 없는 경우 	<br>
+<span>[[${bVal}]]</span> 				: Thymeleaf 3.x 지원  	<br>
+
+<!-- 이스케이프(escape) 처리: 텍스트에 포함된 HTML 태그나 특수 문자가 그대로 출력되도록 처리하는 것  -->
+<span th:text="${sVal}"></span>			: HTML Escaped			<br>
+[[${sVal}]]								: HTML Escaped			<br>
+[(${sVal})]								: HTML unEscaped			<br>
 
 
 <h4>02.객체출력(Concatenate)</h4>
-
+<ul>
+	<li th:text='${"no: " + userVo.no + ", name: " + userVo.name}'></li>
+	<li th:text="'no: ' + ${userVo.no} + ', name: ' + ${userVo.name}"></li>
+	<li th:text="|no: ${userVo.no}, name:${userVo.name}|"></li>
+	<li>no: [[${userVo.no}]], name: [[${userVo.name}]]</li>
+</ul>
 
 <h4>03.객체출력(null처리)</h4>
-
+<ul>
+	<li th:text="${obj}"></li>
+	<li th:text="${'값: ' + obj}"></li>
+	<li th:text="|값: ${obj == null ? '' : obj}|"></li>
+	<li th:if="${obj != null}" th:text="|값:${obj}|"></li>
+	<li>5번째 행 값: [[${obj}]]</li>
+</ul>
 
 <h4>04.Map 출력</h4>
-
+[[${m.iVal}]] <br>
+[[${m.fVal}]] <br>
+[[${m.sVal}]] <br>
 
 <h4>05.산술연산</h4>
-
+<th:block th:text="${3*4+5/2-10}"></th:block>		<br>
+<th:block th:text="${iVal+10*2}"></th:block>		<br>
 
 <h4>06.관계연산</h4>
-
+<th:block th:text="${iVal == 10}"></th:block>		<br>
+<th:block th:text="${iVal < 10}"></th:block>		<br>
+<th:block th:text="${obj == null}"></th:block>		<br>
+<th:block th:text="${obj != null}"></th:block>		<br>
 
 <h4>07.논리연산</h4>
-
+<th:block th:text="${iVal == 10 && lVal <= 100}"></th:block>		<br>
+<th:block th:text="${iVal == 10 || lVal < 100}"></th:block>		<br>
 
 <h4>08.요청 파라미터</h4>
-
+--[[${param.name}]]-- 	<br>
 
 <h4>09.Context Path</h4>
+[[@{'/user/join'}]]		<br>
 
-
+<div style="padding-top: 20px">
+	<a href="/ex01/01">return to index</a>
+</div>
 <div style="padding-top: 20px">
   <a href="">return to index</a>
 </div>
