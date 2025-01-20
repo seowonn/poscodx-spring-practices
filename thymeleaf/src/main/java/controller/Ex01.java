@@ -18,6 +18,12 @@ public class Ex01 {
         // thymeleaf view
         return "ex01/01";
     }
+    
+    @GetMapping("/02")
+    public String _02() {
+    	// jstl view
+    	return "views/ex01/02";
+    }
 
     @GetMapping("/03")
     public String _03(Model model) {

@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.thymeleaf.spring6.ISpringTemplateEngine;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -108,16 +110,35 @@ public class WebConfig implements WebMvcConfigurer {
 
 		return templateEngine;
 	}
-
+	
+	/**
+	 * MultiView: View Resolver를 2개이상 설정하는 경우
+	 * 	setOrder 설정으로 우선순위 지정
+	 * 	setViewNames를 다르게 설정하여 View Resolver의 중복 참조 방지한다.
+	 */
+	
 	// Thymeleaf03: 여러 View Resolver 중 Thymeleaf View Resolver를 설정하는 메서드
 	@Bean
 	public ViewResolver thymeleafViewResolver(ISpringTemplateEngine templateEngine) {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
 		viewResolver.setTemplateEngine(templateEngine);
 		viewResolver.setCharacterEncoding("UTF-8");
 		viewResolver.setOrder(1);
 
 		return viewResolver;
 	}
+	
+	// JSP 파일 반환을 위한 View Resolver 설정
+	@Bean
+	public ViewResolver viewResolver() {
+		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		viewResolver.setViewClass(JstlView.class);
+		viewResolver.setViewNames("views/*");
+		viewResolver.setPrefix("/WEB-INF/");
+		viewResolver.setSuffix(".jsp");
+		viewResolver.setOrder(0);
+
+		return viewResolver;
+	}
+	
 }
