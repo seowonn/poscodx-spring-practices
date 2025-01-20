@@ -15,12 +15,27 @@
 	</properties>
 	
 	<dependencies>
-		<!-- spring Context -->
+		<!-- spring context -->
 		<!-- Spring web MVC 안에 view resolver .. 등등이 있음 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- spring test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- junit jupiter -->
+		<dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-api</artifactId>
+		    <version>5.10.2</version>
+		    <scope>test</scope>
 		</dependency>
 		
 		<!-- spring aspects -->
