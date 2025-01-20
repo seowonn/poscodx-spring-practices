@@ -7,6 +7,17 @@
 <body>
 	<h4>Conditional02: th:switch - th:case</h4>
 	
+	<!-- 값이 아예 넘겨지지 않는 경우에 대한 에러 처리도 고려하기 -->
+	<th:block th:if="${param.c != null}" >
+		<th:block th:switch="${param.c[0]}">
+			<h6 th:case="r" style="color: red">안녕 빨강</h6>
+			<h6 th:case="g" style="color: green">안녕 녹색</h6>
+			<h6 th:case="b" style="color: blue">안녕 파랑</h6>
+			<h6 th:case="*">안녕 검정</h6>
+		</th:block>
+	</th:block>
+
+	
 	<div style="padding-top: 20px">
 		<a th:href="@{/ex01}">return to index</a>
 	</div>	
