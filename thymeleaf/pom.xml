@@ -49,9 +49,13 @@
             <artifactId>thymeleaf-spring6</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
-
-
-
+        
+        <dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		    <version>${thymeleaf.version}</version>
+		</dependency>
+		
         <!-- jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

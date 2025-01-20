@@ -9,24 +9,27 @@
 	<div id="container">
 		<div id="content">
 			<div id="user">
-				<form id="join-form" name="joinForm" method="post" action="/ex06/join">
-					<label class="block-label" for="name">이름</label>
-					<input type="text" id="name" name="name" value="">
+				<form id="join-form" name="joinForm" th:object="${userVo}" method="post" th:action="@{/ex06/join}">
+					<label class="block-label" for="name" th:text="#{user.join.label.name}"></label>
+					<input type="text" id="name" name="name" th:value="${userVo.name}">
+					<p class="error" th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></p>
 
-					<label class="block-label" for="email">이메일</label>
-					<input type="text" id="email" name="email" value="">
-					<input type="button" value="체크">
+					<label class="block-label" for="email" th:text="#{user.join.label.email}">이메일</label>
+					<input type="text" th:field="*{email}">
+					<input type="button" th:value="#{user.join.label.email.check}">
+					<p class="error" th:errors="*{email}"></p>
 
-					<label class="block-label" for="password">비밀번호</label>
-					<input type="password" id="password" name="password" value="">
+					<label class="block-label" for="password" th:text="#{user.join.label.password}"></label>
+					<input type="password" th:field="*{password}">
+					<p class="error" th:errors="*{password}"></p>
 
 					<fieldset>
-						<legend>성별</legend>
-						<label for="gender-female">여</label> <input type="radio" id="gender-female" name="gender" value="female" checked>
-						<label for="gender-male">남</label> <input type="radio" id="gender-male" name="gender" value="male">
+						<legend>[[#{user.join.label.gender}]]</legend>
+						<label for="gender-female">[[#{user.join.label.gender.female}]]</label> <input type="radio" id="gender-female" name="gender" value="female" th:checked="*{gender == 'female'}">
+						<label for="gender-male">[[#{user.join.label.gender.male}]]</label> <input type="radio" id="gender-male" name="gender" value="male" th:checked="*{gender == 'male'}">
 					</fieldset>
 					
-					<input type="submit" value="가입">
+					<input type="submit" th:value="#{user.join.button.signup}">
 				</form>
 			</div>
 			<th:block th:include="includes/footer"></th:block>
