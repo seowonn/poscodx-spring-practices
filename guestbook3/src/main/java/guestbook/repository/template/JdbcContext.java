@@ -140,7 +140,7 @@ public class JdbcContext {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		// 기존 dataSource.getConnection() 과정을 위임. 생략함.
+		// 기존 dataSource.getConnection() 과정을 위임. 생략함. 
 		// 아님 다시 dataSource 주입을 통해 getConnection 사용
 		try {
 			conn = DataSourceUtils.getConnection(dataSource);

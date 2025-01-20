@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+    	<groupId>com.poscodx</groupId>
+    	<artifactId>spring-practices</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+	
+	<artifactId>thymeleaf</artifactId>
+	
+	<packaging>war</packaging>
+	
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <springframework.version>6.2.1</springframework.version>
+        <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
+        
+        <jackson-databind.version>2.18.1</jackson-databind.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <jakarta-el-api.version>5.0.0</jakarta-el-api.version>
+        <jakarta-jstl-api.version>3.0.0</jakarta-jstl-api.version>
+        <jakarta-jstl.version>3.0.1</jakarta-jstl.version>
+        <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
+        <jakarta-jsp-api.version>4.0.0</jakarta-jsp-api.version>
+        <jakarta-jsp-api.version>4.0.0</jakarta-jsp-api.version>    
+    </properties>
+
+    <dependencies>
+        <!-- spring webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+            
+        <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring6</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+
+
+        <!-- jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <!-- validation -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <!-- jstl/el -->
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+            <version>${jakarta-el-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>${jakarta-jstl-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>${jakarta-jstl.version}</version>
+        </dependency>
+        <!-- servlet api -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta-servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- jsp api -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>${jakarta-jsp-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+                        
+    </dependencies>
+
+    <build>
+        <finalName>thymeleaf</finalName>
+    </build>	
+</project>

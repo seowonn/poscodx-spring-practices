@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+<title>thymeleaf</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link th:href="@{/assets/css/user.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="content">
+			<div id="user">
+				<form id="join-form" name="joinForm" method="post" action="/ex06/join">
+					<label class="block-label" for="name">이름</label>
+					<input type="text" id="name" name="name" value="">
+
+					<label class="block-label" for="email">이메일</label>
+					<input type="text" id="email" name="email" value="">
+					<input type="button" value="체크">
+
+					<label class="block-label" for="password">비밀번호</label>
+					<input type="password" id="password" name="password" value="">
+
+					<fieldset>
+						<legend>성별</legend>
+						<label for="gender-female">여</label> <input type="radio" id="gender-female" name="gender" value="female" checked>
+						<label for="gender-male">남</label> <input type="radio" id="gender-male" name="gender" value="male">
+					</fieldset>
+					
+					<input type="submit" value="가입">
+				</form>
+			</div>
+			<th:block th:include="includes/footer"></th:block>
+		</div>
+	</div>
+</body>
+</html>

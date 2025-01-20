@@ -11,6 +11,7 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -40,58 +41,26 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 	}
 	
+	@Transactional
 	public void deleteContents(Long id, String password) {
-		// TX:BEGIN //
-		TransactionStatus txStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+		GuestbookVo vo = guestbookRepository.findById(id);
+		if(vo == null) {
+			return;
+		}
 		
-		try {
-			GuestbookVo vo = guestbookRepository.findById(id);
-			if(vo == null) {
-				return;
-			}
-			
-			int count = guestbookRepository.deleteByIdAndPassword(id, password);
-			if(count == 1) {
-				guestbookLogRepository.update(vo.getRegDate());
-			}
-			
-			// TX:END (SUCCESS) //
-			transactionManager.commit(txStatus);
-			
-		} catch (Throwable e) {
-			transactionManager.rollback(txStatus);
+		int count = guestbookRepository.deleteByIdAndPassword(id, password);
+		if(count == 1) {
+			guestbookLogRepository.update(vo.getRegDate());
 		}
 	}
 	
+	@Transactional
 	public void addContents(GuestbookVo vo) {
-		// 트랜잭션 동기(Connection) 초기화
-		TransactionSynchronizationManager.initSynchronization();
-		Connection conn = DataSourceUtils.getConnection(dataSource);
-		
-		try {
-			// TX:BEGIN //
-			conn.setAutoCommit(false);
-			int count = guestbookLogRepository.update();
-			if(count == 0) {
-				guestbookLogRepository.insert();
-			}
-			
-			guestbookRepository.insert(vo);
-			
-			// TX:END (SUCCESS)
-			conn.commit();
-			
-		} catch (Throwable e) {
-			// TX:END (FAIL)
-			try {
-				conn.rollback();
-			} catch (SQLException ignore) {
-			}
-			
-			throw new RuntimeException(e);
-		} finally {
-			DataSourceUtils.releaseConnection(conn, dataSource);
+		int count = guestbookLogRepository.update();
+		if(count == 0) {
+			guestbookLogRepository.insert();
 		}
+		guestbookRepository.insert(vo);
 	}
 	
 }
